@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Battleship</title>
+    <style>
+body {
+background-color: black;
+color: white;
+}
+div#board {
+position: relative;
+width: 550px;
+height: 700px;
+margin: auto;
+
+}
+div#messageArea {
+position: absolute;
+top: 0px;
+left: 50px;
+color: #dadada;
+}
+table {
+position: absolute;
+left:0;
+top: 98px;
+border-spacing: 0px;
+        }
+td {
+width: 70px;
+height: 70px;
+border: 1px solid #df1f11;
+}
+td.ag {
+border: none;
+color: #b2b2b2;
+text-align: right;
+padding-right: 5px;
+width: 20px;
+}
+        tr.num td{
+            border: none;
+            color: #b2b2b2;
+            text-align: center;
+            padding-bottom: 5px;
+            height: 20px;
+        }
+form {
+position: absolute;
+top: 0px;
+right: 0px;
+padding: 10px;
+background-color: #b2b2b2;
+    border-radius: 5;
+}
+form input {
+width: 100px;
+background-color: #dadada;
+border-color: black;
+    border-radius: 5;
+font-size: 1em;
+}
+.hit {
+background: url("ship.png")no-repeat center center;        
+}
+.miss {
+background: red;
+}
+        
+  /* The side navigation menu */
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: darkred; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 1s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #556677;
+    display: block;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover{
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+} 
+        
+        
+        #myModal {
+            position: fixed;
+            z-index: 1;
+            padding: 20px;
+            left:0;
+            top: 50px;
+            width: 500px;
+            height: 50px;           
+            background-color: red;
+            display: none;
+        }
+        .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+} 
+    </style>
+
+</head>
+<body>
+    <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+</div>
+
+<!-- Use any element to open the sidenav -->
+<span onclick="openNav()">open</span>
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<div id="main">
+  
+    
+    <div id="board">
+        <div id ="myModal">You destroyed all the boats. Movements: 
+        <span class="close">&times;</span></div>
+        <div id="messageArea"></div>
+        <form>
+        <input type="text" id="guessInput" placeholder="A0">
+        <input type="button" id="fireButton" value="Tire !">
+        </form>
+    <table>
+<tr class="num"><td></td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+<tr>
+<td class="ag">A</td><td id="00"></td><td id="01"></td><td id="02"></td><td id="03">
+</td><td id="04"></td> <td id="05"></td><td id="06"></td>
+</tr>
+<tr>
+<td class="ag">B</td><td id="10"></td><td id="11"></td><td id="12"></td><td id="13"></td><td id="14"></td> <td id="15"></td><td id="16"></td>
+</tr>
+<tr>
+<td class="ag">C</td><td id="20"></td><td id="21"></td><td id="22"></td><td id="23"></td><td id="24"></td> <td id="25"></td><td id="26"></td>
+</tr>
+<tr>
+<td class="ag">D</td><td id="30"></td><td id="31"></td><td id="32"></td><td id="33"></td>
+<td id="34"></td> <td id="35"></td><td id="36"></td>
+</tr>
+<tr>
+<td class="ag">E</td><td id="40"></td><td id="41"></td><td id="42"></td><td id="43"></td>
+<td id="44"></td> <td id="45"></td><td id="46"></td>
+</tr>     
+<tr>
+<td class="ag">F</td><td id="50"></td><td id="51"></td><td id="52"></td><td id="53"></td>
+<td id="54"></td> <td id="55"></td><td id="56"></td>
+</tr>
+<tr>
+<td class="ag">G</td><td id="60"></td><td id="61"></td><td id="62"></td><td id="63"></td>
+<td id="64"></td><td id="65"></td><td id="66"></td>
+</tr>
+</table>
+        
+    </div>
+    </div>
+    <script src="battleship.js">
+   </script>
+    <script>
+    /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "200px";
+    document.getElementById("main").style.marginLeft = "200px";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+} </script>
+    </body>
+</html>
